@@ -149,7 +149,7 @@ def test_pdf_pagination_korean_and_filter(app,client,tmp_path):
     for _ in range(21):
         client.post('/inspections',data=inspection_data(client))
     client.post('/records/inspection/1/annotations',data=dict(csrf_token=csrf(client),text='추가 정정 내용'))
-    assert '다음 →' in client.get('/records?period=all').text
+    assert 'page=2">다음' in client.get('/records?period=all').text
     assert '이전' in client.get('/records?period=all&page=2').text
     response=client.get('/records/export.pdf?period=all&include_notes=1')
     assert response.status_code==200 and response.data.startswith(b'%PDF')

@@ -7,3 +7,19 @@
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
 .logo small{font-size:9px;letter-spacing:1.3px;font-weight:650;white-space:nowrap}.line.row>span:first-child{flex-shrink:0}
 dialog{border:1px solid var(--line);border-radius:14px;padding:28px;width:min(480px,calc(100vw - 32px));color:var(--dark);box-shadow:0 24px 80px #143c3529}dialog::backdrop{background:#143c3560}dialog .actions{justify-content:flex-end}
+
+/* One hand-drawn SVG family across desktop, mobile and inline actions. */
+.icon{display:inline-block;width:20px;height:20px;flex-shrink:0;vertical-align:middle;pointer-events:none}
+.sidebar nav a{display:flex;align-items:center;gap:12px}
+.navicon{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;flex-shrink:0}
+.navicon .icon,.bottomnav .icon{width:22px;height:22px}
+.bottomnav a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.bottomnav a span{display:flex;align-items:center;justify-content:center;height:24px}
+.recordicon .icon{width:22px;height:22px}
+.btn .icon{width:17px;height:17px}
+.source-link .icon{width:14px;height:14px;margin-left:3px;vertical-align:-2px}
+.flash>.icon{width:18px;height:18px;margin-right:5px;vertical-align:-4px}
+.map-placeholder>span{display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.map-placeholder .icon{width:44px;height:44px;stroke-width:1.5}
+summary>.icon{width:16px;height:16px;vertical-align:-3px;margin-right:4px}
+.btn{white-space:nowrap}

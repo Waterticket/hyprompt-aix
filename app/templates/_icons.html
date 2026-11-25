@@ -1,0 +1,36 @@
+{# Shared 24px icon set. Decorative icons inherit the surrounding text color. #}
+{% macro icon(name) -%}
+<svg class="icon icon-{{ name }}" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+{%- if name == 'dashboard' -%}
+<rect x="3" y="3" width="7" height="10" rx="2"/><rect x="14" y="3" width="7" height="6" rx="2"/><rect x="3" y="17" width="7" height="4" rx="1.5"/><rect x="14" y="13" width="7" height="8" rx="2"/>
+{%- elif name == 'scooter' -%}
+<circle cx="5" cy="18" r="2.5"/><circle cx="19" cy="18" r="2.5"/><path d="M5 18h10.5L18 14l-3-10h-4M15.6 6H18M8 15h6"/>
+{%- elif name == 'inspection' -%}
+<rect x="5" y="4" width="14" height="17" rx="2"/><rect x="9" y="2" width="6" height="4" rx="1.5" fill="var(--bg)"/><path d="m8.5 13 2.5 2.5 4.5-5"/>
+{%- elif name == 'records' -%}
+<path d="M8 3h10a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2ZM4 7h4M4 12h4M4 17h4M11 8h5M11 12h5M11 16h3"/>
+{%- elif name == 'pin' -%}
+<path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"/><circle cx="12" cy="10" r="2.5"/>
+{%- elif name == 'locate' -%}
+<circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>
+{%- elif name == 'battery' -%}
+<rect x="2.5" y="6" width="17" height="12" rx="2.5"/><path d="M22 10v4M12 8.5l-4 4h5l-3 3"/>
+{%- elif name == 'plus' -%}
+<path d="M12 5v14M5 12h14"/>
+{%- elif name == 'arrow-right' -%}
+<path d="M4 12h16m-6-6 6 6-6 6"/>
+{%- elif name == 'arrow-left' -%}
+<path d="M20 12H4m6-6-6 6 6 6"/>
+{%- elif name == 'external' -%}
+<path d="M14 3h7v7m0-7L11 13M10 5H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"/>
+{%- elif name == 'download' -%}
+<path d="M12 3v12m-5-5 5 5 5-5M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/>
+{%- elif name == 'check' -%}
+<circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16 9"/>
+{%- elif name == 'copy' -%}
+<rect x="8" y="8" width="13" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/>
+{%- elif name == 'refresh' -%}
+<path d="M20 7v5h-5M4 17v-5h5M19 8a8 8 0 0 0-13-2L4 8m16 8-2 2A8 8 0 0 1 5 16"/>
+{%- endif -%}
+</svg>
+{%- endmacro %}
