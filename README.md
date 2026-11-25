@@ -4,6 +4,42 @@
 
 ## 실행
 
+### Docker로 실행
+
+서버에 Docker Engine과 Compose 플러그인을 설치하고, Git으로 받은 프로젝트 루트에 `.env`와 `docker-compose.yaml`을 준비합니다. 저장소에는 예제만 포함하며, 서버의 실제 설정 파일은 Git에서 제외하므로 `git pull`로 덮어쓰지 않습니다. `compose.yaml`이 있으면 Docker가 우선 사용하므로 서버에서는 `docker-compose.yaml` 하나만 사용하세요.
+
+```sh
+# 최초 설정 시 예제를 복사한 뒤 서버에 맞게 편집
+cp .env.example .env
+cp docker-compose.yaml.example docker-compose.yaml
+
+# 설정이 준비되어 있으면 실행
+docker compose up -d
+```
+
+이미 준비한 서버 설정 파일이 있다면 복사 단계는 생략합니다. 예제의 `env_file: .env`는 서버의 환경 변수를 컨테이너에 전달하며, `pull_policy: build`는 `up -d`만으로 현재 소스를 빌드하게 합니다. 관련 동작은 [Docker Compose 공식 명세](https://compose-spec.github.io/compose-spec/05-services.html#pull_policy)를 참고하세요. 서버에서 직접 만드는 Compose 파일에도 두 설정과 `build: .`을 포함해야 합니다.
+
+기본 접속 주소는 `http://서버주소:5000`입니다. `.env`에서 `KICKLOG_PORT`로 포트를 변경하고, 같은 서버의 리버스 프록시를 통할 때는 `KICKLOG_BIND_HOST=127.0.0.1`로 지정할 수 있습니다. DB는 첫 실행 때 자동 생성됩니다. 한글 PDF용 NanumGothic 글꼴은 이미지에 포함되어 있어 별도 설정이 필요 없습니다. Docker에서 `PDF_FONT_PATH`를 직접 지정한다면 컨테이너 내부 경로를 사용하세요. `.env` 파일 자체는 이미지에 포함되지 않습니다.
+
+소스나 `.env`를 변경한 뒤에도 같은 명령으로 적용합니다.
+
+```sh
+git pull
+docker compose up -d
+```
+
+SQLite DB와 자동 생성된 세션 키는 `kicklog-data` Docker 볼륨에 저장되며, 컨테이너 재생성이나 `docker compose down` 후에도 유지됩니다. 기존 로컬 `instance/`의 기록은 자동으로 가져오지 않으므로 Docker의 첫 실행은 빈 DB로 시작합니다. `docker compose down -v`는 저장된 기록까지 삭제하므로 주의하세요.
+
+```sh
+docker compose logs -f web   # 로그 확인
+docker compose down          # 종료 (기록 유지)
+docker compose up -d         # 다시 시작
+```
+
+5000번 포트를 다른 프로그램이 사용하면 서버 `.env`에 `KICKLOG_PORT=5001`을 지정하고 `docker compose up -d`로 적용합니다. 카카오 지도를 사용하면 접속 주소와 포트를 SDK 허용 도메인에도 등록하세요.
+
+### Python으로 직접 실행
+
 Python 3.11 이상을 사용합니다. 기존 `.venv`에는 실행과 테스트 의존성을 설치했습니다.
 
 ```sh

@@ -1,0 +1,15 @@
+.git
+.env
+.env.*
+docker-compose.y*ml
+compose.y*ml
+.venv
+**/__pycache__
+**/*.py[cod]
+.pytest_cache
+.DS_Store
+instance
+tmp
+output
+docs
+tests

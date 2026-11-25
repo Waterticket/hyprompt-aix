@@ -5,3 +5,8 @@ __pycache__/
 tmp/
 instance/
 .env
+docker-compose.yaml
+docker-compose.yml
+compose.yaml
+compose.yml
+docker-compose.yaml
