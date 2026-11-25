@@ -1,0 +1,133 @@
+{
+  "responsive": [
+    {
+      "page": "dashboard",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "page": "scooters",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "page": "detail",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "page": "register",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "page": "inspection",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "page": "records",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "page": "record-detail",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "page": "centers",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "page": "dashboard",
+      "width": 768,
+      "overflow": false
+    },
+    {
+      "page": "scooters",
+      "width": 768,
+      "overflow": false
+    },
+    {
+      "page": "detail",
+      "width": 768,
+      "overflow": false
+    },
+    {
+      "page": "register",
+      "width": 768,
+      "overflow": false
+    },
+    {
+      "page": "inspection",
+      "width": 768,
+      "overflow": false
+    },
+    {
+      "page": "records",
+      "width": 768,
+      "overflow": false
+    },
+    {
+      "page": "record-detail",
+      "width": 768,
+      "overflow": false
+    },
+    {
+      "page": "centers",
+      "width": 768,
+      "overflow": false
+    },
+    {
+      "page": "dashboard",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "page": "scooters",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "page": "detail",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "page": "register",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "page": "inspection",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "page": "records",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "page": "record-detail",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "page": "centers",
+      "width": 390,
+      "overflow": false
+    }
+  ],
+  "jsErrors": [],
+  "workflow": "registration → issue inspection → annotation → PDF passed",
+  "missingKey": "passed",
+  "geolocationDenied": "passed",
+  "sdkMockSuccess": "passed",
+  "sdkNetworkFailure": "passed",
+  "unsavedNavigation": "passed",
+  "keyboardSkip": "passed",
+  "realKakaoKey": "not tested; requires user key and registered domain"
+}

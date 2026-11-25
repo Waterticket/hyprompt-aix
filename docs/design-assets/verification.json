@@ -1,0 +1,21 @@
+{
+  "checked_on": "2026-11-25",
+  "documentSections": 17,
+  "images": 14,
+  "brokenLocalLinks": [],
+  "jsErrors": [],
+  "responsive": [
+    {
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "width": 768,
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "overflow": false
+    }
+  ]
+}

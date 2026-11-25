@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "checked_on": "2026-11-25",
+  "mode": "local_fixture",
+  "records": [
+    {
+      "id": "erica-main-building-demo",
+      "name": "한양대학교 ERICA 본관",
+      "address": "경기도 안산시 상록구 한양대학로 55",
+      "address_detail": "한양대학교 ERICA 본관",
+      "postal_code": "15588",
+      "place_search_query": "한양대학교 ERICA 본관",
+      "latitude": null,
+      "longitude": null,
+      "coordinate_status": "unresolved",
+      "is_demo": true,
+      "is_actual_repair_center": false,
+      "is_partner": false,
+      "phone": null,
+      "business_hours": null,
+      "services": [],
+      "source_title": "한양대학교 ERICA 입학처 · 찾아오시는 길",
+      "source_url": "https://goerica.hanyang.ac.kr/admission/html/usage/map.asp",
+      "checked_on": "2026-11-25",
+      "notes": "사용자가 지정한 수리센터 화면용 위치 데이터 1건. 실제 수리센터가 아님. 주소 변환 좌표는 캠퍼스 대표 위치일 수 있어 본관의 정확한 좌표로 단정하지 않음."
+    }
+  ]
+}

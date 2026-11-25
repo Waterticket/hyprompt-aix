@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "checked_on": "2026-11-25",
+  "mode": "local_fixture",
+  "records": [
+    {
+      "id": "xiaomi-m365-folding-screw-2019",
+      "manufacturer": "Xiaomi",
+      "scooter_model": "M365",
+      "title": "M365 일부 생산분 접이식 구조 나사 결함 관련 수리 리콜",
+      "component": "folding_mechanism_screw",
+      "hazard_summary": "접이식 구조의 나사가 풀려 주행 중 차체와 조향 기둥이 분리될 위험.",
+      "production_start": "2018-10-27",
+      "production_end": "2018-12-05",
+      "programme_start": "2019-07-01",
+      "publication_date": null,
+      "source_region": "FR",
+      "coverage_note": "프랑스 공식 안내의 과거 리콜 사례. 한국 판매분 적용 여부는 미확인. 프랑스 공식 판매처 제품은 해당하지 않는다고 원문에 명시.",
+      "serial_verification_required": true,
+      "current_programme_status": "not_verified",
+      "user_applicability": "requires_manufacturer_confirmation",
+      "recommended_action": "대상 여부를 제조사 공식 채널에서 시리얼번호로 확인. 제조사 안내는 확인 전 사용 중단을 요청함.",
+      "source_title": "Xiaomi France · Mi Electric Scooters recall for repair",
+      "source_url": "https://www.mi.com/fr/service/support/mi-electric-scooter-recall-program.html",
+      "checked_on": "2026-11-25",
+      "provenance": "manufacturer_recall_notice",
+      "notes": "배터리 화재 리콜이 아닌 접이식 기구 리콜. 모델 일치만으로 개별 기기를 리콜 대상으로 확정하지 않음."
+    }
+  ]
+}

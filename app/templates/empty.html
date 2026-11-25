@@ -1,0 +1,1 @@
+{% extends 'base.html' %}{% block content %}<div class="heading"><div><div class="eyebrow">START YOUR CARE</div><h1>{{ title }}</h1></div></div><section class="card onboarding"><h2>먼저 킥보드를 등록해주세요</h2><p class="sub">기기를 등록하면 주간 점검을 시작할 수 있습니다.</p>{% include '_scooter.html' %}<a href="{{ url_for('web.scooter_new') }}" class="btn primary">킥보드 등록하기</a></section>{% endblock %}

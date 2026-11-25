@@ -1,0 +1,83 @@
+const { chromium }=require(process.env.PLAYWRIGHT_MODULE_PATH || 'playwright');
+const fs=require('fs');
+(async()=>{
+const browser=await chromium.launch({headless:true,channel:'chrome'});
+const page=await browser.newPage({viewport:{width:1440,height:1100}});
+const errors=[]; page.on('pageerror',e=>errors.push(e.message));
+const base=process.env.KICKLOG_QA_URL || 'http://127.0.0.1:5001';
+await page.goto('http://127.0.0.1:5000');
+await page.screenshot({path:'output/qa/empty-desktop.png',fullPage:true});
+await page.goto(base+'/scooters/new');
+await page.locator('#nickname').fill('나의 출퇴근 킥보드');
+await page.locator('#manufacturer').fill('Xiaomi');
+await page.locator('#model').fill('M365');
+await page.locator('#battery_catalog_id').selectOption('xiaomi-m365-standard');
+await page.locator('#purchased_on').fill('2026-08-10');
+await page.locator('#initial_replaced_on').fill('2026-11-01');
+await page.getByRole('button',{name:'킥보드 등록하기',exact:true}).click();
+await page.waitForURL('**/scooters/1');
+if(!await page.getByText('킥보드를 등록했습니다.').count())throw Error('register failed');
+await page.getByRole('link',{name:'점검 시작',exact:true}).click();
+await page.locator('#tire').selectOption('issue');
+await page.locator('#brake').selectOption('ok');
+if(await page.locator('#progress-text').innerText()!=='2 / 4')throw Error('progress');
+if(!await page.locator('#issue-warning').isVisible())throw Error('issue banner');
+await page.locator('#battery_body').selectOption('unknown');
+await page.locator('#charger_port').selectOption('ok');
+await page.locator('#impact_water_result').selectOption('no');
+await page.locator('#notes').fill('앞 타이어의 마모를 확인했습니다. 제조사 점검이 필요합니다.');
+await page.getByRole('button',{name:'점검 결과 저장하기'}).click();
+await page.waitForURL('**/records/inspection/1');
+await page.locator('#text').fill('타이어 상태를 재확인하고 다음 점검에 기록할 예정입니다.');
+await page.getByRole('button',{name:'정정 메모 추가'}).click();
+await page.waitForLoadState('networkidle');
+await page.goto(base+'/records?period=all');
+await page.getByRole('link',{name:'PDF 다운로드',exact:false}).click();
+await page.locator('#export-confirm').waitFor({state:'visible'});
+await page.locator('#export-confirm input[name=include_notes]').check();
+const [download]=await Promise.all([page.waitForEvent('download'),page.getByRole('button',{name:'PDF 저장하기',exact:true}).click()]);
+await download.saveAs('output/qa/records-sample.pdf');
+const paths=[['dashboard','/'],['scooters','/scooters'],['detail','/scooters/1'],['register','/scooters/new'],['inspection','/inspections/new'],['records','/records?period=all'],['record-detail','/records/inspection/1'],['centers','/repair-centers']];
+const responsive=[];
+for(const width of [1440,768,390]){
+ await page.setViewportSize({width,height:width===390?844:1100});
+ for(const [name,path] of paths){
+  await page.goto(base+path);
+  if((await page.title()).includes('500'))throw Error('server error '+path);
+  const dimensions=await page.evaluate(()=>({width:innerWidth,scroll:document.documentElement.scrollWidth}));
+  if(dimensions.scroll>width)throw Error(`overflow ${name} ${width}: ${dimensions.scroll}`);
+  await page.screenshot({path:`output/qa/${name}-${width}.png`,fullPage:true});
+  responsive.push({page:name,width,overflow:false});
+ }
+}
+await page.goto(base+'/repair-centers');
+await page.context().clearPermissions();
+await page.getByRole('button',{name:'내 위치',exact:false}).click();
+await page.waitForFunction(()=>document.getElementById('location-status').textContent.includes('현재 위치 없이'));
+await page.getByRole('button',{name:'지도 다시 시도'}).click();
+if(!await page.locator('#map-status').innerText().then(s=>s.includes('설정되지')))throw Error('missing key fallback');
+// Exercise SDK integration with deterministic browser mocks, separately from real-key verification.
+await page.evaluate(()=>document.getElementById('kakao-map').dataset.key='mock-javascript-key');
+await page.route('https://dapi.kakao.com/v2/maps/sdk.js**',route=>route.fulfill({contentType:'text/javascript',body:`window.kakao={maps:{load:cb=>cb(),services:{Status:{OK:'OK',ZERO_RESULT:'ZERO_RESULT'},Geocoder:class{addressSearch(a,cb){cb([{x:'126.93',y:'37.30'}],'OK')}}},LatLng:class{constructor(y,x){this.y=y;this.x=x}},Map:class{relayout(){}setCenter(){}setZoomable(){}},Marker:class{}}};`}));
+await page.getByRole('button',{name:'지도 다시 시도'}).click();
+await page.waitForFunction(()=>document.getElementById('map-status').textContent.includes('캠퍼스 주소 기준 위치입니다'));
+await page.unroute('https://dapi.kakao.com/v2/maps/sdk.js**');
+await page.evaluate(()=>{delete window.kakao;});
+await page.route('https://dapi.kakao.com/v2/maps/sdk.js**',route=>route.abort());
+await page.getByRole('button',{name:'지도 다시 시도'}).click();
+await page.waitForFunction(()=>document.getElementById('map-status').textContent.includes('SDK 로드에 실패'));
+// Dirty-form navigation and keyboard skip link.
+await page.goto(base+'/scooters/new');
+await page.keyboard.press('Tab');
+if(await page.locator(':focus').innerText()!=='본문으로 건너뛰기')throw Error('keyboard skip');
+await page.locator('#nickname').fill('미저장 변경');
+let prompted=false;
+page.once('dialog',async dialog=>{prompted=true;await dialog.dismiss()});
+await page.getByRole('link',{name:'내 킥보드로',exact:true}).click({noWaitAfter:true});
+await page.waitForTimeout(500);
+if(!prompted)throw Error('dirty form warning');
+if(errors.length)throw Error('page errors '+errors.join('\n'));
+fs.writeFileSync('output/qa/browser-results.json',JSON.stringify({responsive,jsErrors:errors,workflow:'registration → issue inspection → annotation → PDF passed',missingKey:'passed',geolocationDenied:'passed',sdkMockSuccess:'passed',sdkNetworkFailure:'passed',unsavedNavigation:'passed',keyboardSkip:'passed',realKakaoKey:'not tested; requires user key and registered domain'},null,2));
+await browser.close();
+console.log('Browser QA passed: 24 responsive screens, registration, inspection, annotations, PDF, map fallback, SDK mocks, keyboard, dirty form.');
+})().catch(e=>{console.error(e);process.exit(1)});
